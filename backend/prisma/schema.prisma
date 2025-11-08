@@ -1,0 +1,125 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// ENUMS
+// ============================================
+
+enum UserRole {
+  STUDENT          // Students - submit evaluations, view feedback
+  ACADEMIC_STAFF   // Academic Staff/Tutor - self/peer evaluations, course analytics
+  HOD              // Head of Department (includes Dean) - unit dashboards, approvals
+  QAC_MEMBER       // QAU Analyst/QA Officer - full analytics, tool activation
+  REGISTRAR        // Registrar/Academic Office - programme evaluation, accreditation
+  DIRECTOR         // Principal/Management Team - institutional performance
+  SYSTEM_ADMIN     // System Administrator - tenant, SSO, backups
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+  PENDING_VERIFICATION
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+  PREFER_NOT_TO_SAY
+}
+
+// ============================================
+// USER MANAGEMENT
+// ============================================
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String   // Hashed password
+  role      UserRole @default(STUDENT)
+  status    UserStatus @default(PENDING_VERIFICATION)
+  
+  // Personal Information
+  firstName String
+  lastName  String
+  middleName String?
+  gender    Gender?
+  dateOfBirth DateTime?
+  phoneNumber String?
+  profileImage String?
+  
+  // Academic Information (for students/instructors)
+  studentId String? @unique
+  employeeId String? @unique
+  department String?
+  program String?
+  yearOfStudy Int?
+  
+  // Authentication
+  emailVerified Boolean @default(false)
+  emailVerificationToken String?
+  passwordResetToken String?
+  passwordResetExpires DateTime?
+  lastLogin DateTime?
+  
+  // Refresh Tokens
+  refreshTokens RefreshToken[]
+  
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Soft delete
+  deletedAt DateTime?
+  
+  @@index([email])
+  @@index([studentId])
+  @@index([employeeId])
+  @@index([role])
+  @@index([status])
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  
+  @@index([userId])
+  @@index([token])
+  @@map("refresh_tokens")
+}
+
+// ============================================
+// AUDIT LOG
+// ============================================
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String?
+  action    String   // e.g., "USER_LOGIN", "USER_CREATED", "EVALUATION_SUBMITTED"
+  entity    String?  // e.g., "User", "Evaluation"
+  entityId  String?
+  changes   Json?    // Store before/after changes
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("audit_logs")
+}

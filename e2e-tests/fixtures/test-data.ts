@@ -11,12 +11,12 @@ export const testUsers = {
     lastName: 'Student',
     role: 'STUDENT',
   },
-  instructor: {
-    email: 'instructor@test.tpi.ac.tz',
+  academicStaff: {
+    email: 'staff@test.tpi.ac.tz',
     password: 'Test@123',
     firstName: 'Test',
-    lastName: 'Instructor',
-    role: 'INSTRUCTOR',
+    lastName: 'Tutor',
+    role: 'ACADEMIC_STAFF',
   },
   hod: {
     email: 'hod@test.tpi.ac.tz',
@@ -25,19 +25,19 @@ export const testUsers = {
     lastName: 'HOD',
     role: 'HOD',
   },
-  dean: {
-    email: 'dean@test.tpi.ac.tz',
-    password: 'Test@123',
-    firstName: 'Test',
-    lastName: 'Dean',
-    role: 'DEAN',
-  },
-  qac: {
+  qacMember: {
     email: 'qac@test.tpi.ac.tz',
     password: 'Test@123',
     firstName: 'Test',
     lastName: 'QAC',
     role: 'QAC_MEMBER',
+  },
+  registrar: {
+    email: 'registrar@test.tpi.ac.tz',
+    password: 'Test@123',
+    firstName: 'Test',
+    lastName: 'Registrar',
+    role: 'REGISTRAR',
   },
   director: {
     email: 'director@test.tpi.ac.tz',
