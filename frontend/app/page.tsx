@@ -16,10 +16,10 @@ export default function Home() {
             🚀 Docker development environment is running!
           </p>
           <p className="text-xs text-gray-500 mt-2">
-            Frontend: http://localhost:3001
+            Frontend: http://localhost:3100
           </p>
           <p className="text-xs text-gray-500">
-            Backend: http://localhost:4001
+            Backend: http://localhost:4100
           </p>
         </div>
       </div>

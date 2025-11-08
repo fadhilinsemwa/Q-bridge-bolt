@@ -7,14 +7,14 @@ services:
       dockerfile: Dockerfile.dev
     container_name: qbridge-frontend-dev
     ports:
-      - "3001:3000"
+      - "3100:3000"
     volumes:
       - ./frontend:/app
       - /app/node_modules
       - /app/.next
     environment:
       - NODE_ENV=development
-      - NEXT_PUBLIC_API_URL=http://localhost:4001/api
+      - NEXT_PUBLIC_API_URL=http://localhost:4100/api
       - NEXT_PUBLIC_PRIMARY_COLOR=${NEXT_PUBLIC_PRIMARY_COLOR:-#14b8a6}
       - NEXT_PUBLIC_LOGO_URL=${NEXT_PUBLIC_LOGO_URL}
       - NEXT_PUBLIC_FAVICON_URL=${NEXT_PUBLIC_FAVICON_URL}
@@ -31,7 +31,7 @@ services:
       dockerfile: Dockerfile.dev
     container_name: qbridge-backend-dev
     ports:
-      - "4001:4000"
+      - "4100:4000"
     volumes:
       - ./backend:/app
       - /app/node_modules
@@ -40,7 +40,7 @@ services:
       - NODE_ENV=development
       - DATABASE_URL=${DATABASE_URL:-postgresql://qbridge_dev:dev_password@postgres:5432/qbridge_dev}
       - REDIS_URL=${REDIS_URL:-redis://redis:6379}
-      - FRONTEND_URL=http://localhost:3001
+      - FRONTEND_URL=http://localhost:3100
       - MINIO_ENDPOINT=${MINIO_ENDPOINT:-minio:9000}
       - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-minioadmin}
       - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-minioadmin123}
