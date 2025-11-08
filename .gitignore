@@ -75,3 +75,9 @@ postgres_data/
 
 # Redis data (local development)
 redis_data/
+
+# E2E Tests
+e2e-tests/node_modules/
+e2e-tests/test-results/
+e2e-tests/playwright-report/
+e2e-tests/playwright/.cache/
