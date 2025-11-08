@@ -433,10 +433,10 @@ docker-compose exec backend npm run seed
 # Application
 NODE_ENV=production
 APP_NAME=Q-Bridge
-APP_URL=https://qbridge.tpi.ac.tz
+APP_URL=https://qbridge.tandabuiinstitute.ac.tz
 
 # Frontend (Next.js)
-NEXT_PUBLIC_API_URL=https://qbridge.tpi.ac.tz/api
+NEXT_PUBLIC_API_URL=https://qbridge.tandabuiinstitute.ac.tz/api
 NEXT_PUBLIC_APP_NAME=Q-Bridge
 NEXT_PUBLIC_PRIMARY_COLOR=#14b8a6  # Teal
 NEXT_PUBLIC_FONT_FAMILY=Inter,sans-serif
@@ -597,7 +597,7 @@ nginx:alpine             ~25MB
 - [ ] Docker and Docker Compose installed on Ultahost server
 - [ ] `.env` file configured with production values
 - [ ] SSL certificates obtained (Let's Encrypt)
-- [ ] Domain DNS configured (qbridge.tpi.ac.tz → server IP)
+- [ ] Domain DNS configured (qbridge.tandabuiinstitute.ac.tz → server IP)
 - [ ] Firewall rules configured (ports 80, 443)
 - [ ] Database backups configured
 - [ ] Monitoring setup (optional: Prometheus/Grafana)

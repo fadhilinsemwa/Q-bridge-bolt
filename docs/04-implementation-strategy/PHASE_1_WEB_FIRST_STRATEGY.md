@@ -30,7 +30,7 @@
 │  │ Safari   │       └──────────┘      └────────┘  │
 │  └──────────┘                                      │
 │                                                     │
-│  All users access via: https://qbridge.tpi.ac.tz   │
+│  All users access via: https://qbridge.tandabuiinstitute.ac.tz   │
 └─────────────────────────────────────────────────────┘
 ```
 
@@ -84,7 +84,7 @@ Desktop: 1024px+        (Primary for admin/staff)
 #### **1. Direct Browser Access (Primary)**
 ```
 Student opens mobile browser → 
-Navigates to https://qbridge.tpi.ac.tz → 
+Navigates to https://qbridge.tandabuiinstitute.ac.tz → 
 Logs in → 
 Mobile-optimized interface loads
 ```
@@ -620,7 +620,7 @@ export function DesktopDashboard() {
 │  │ - Persistent volume                         │   │
 │  └─────────────────────────────────────────────┘   │
 │                                                     │
-│  Domain: https://qbridge.tpi.ac.tz                  │
+│  Domain: https://qbridge.tandabuiinstitute.ac.tz                  │
 │  Orchestration: Docker Compose                      │
 └─────────────────────────────────────────────────────┘
 ```
@@ -649,7 +649,7 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      - NEXT_PUBLIC_API_URL=https://qbridge.tpi.ac.tz/api
+      - NEXT_PUBLIC_API_URL=https://qbridge.tandabuiinstitute.ac.tz/api
     depends_on:
       - backend
 

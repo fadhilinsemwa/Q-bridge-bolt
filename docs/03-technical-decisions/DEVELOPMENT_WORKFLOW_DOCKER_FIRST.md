@@ -546,10 +546,10 @@ JWT_REFRESH_EXPIRATION=7d
 # Application
 NODE_ENV=production
 APP_NAME=Q-Bridge
-APP_URL=https://qbridge.tpi.ac.tz
+APP_URL=https://qbridge.tandabuiinstitute.ac.tz
 
 # Frontend (Next.js)
-NEXT_PUBLIC_API_URL=https://qbridge.tpi.ac.tz/api
+NEXT_PUBLIC_API_URL=https://qbridge.tandabuiinstitute.ac.tz/api
 NEXT_PUBLIC_APP_NAME=Q-Bridge
 NEXT_PUBLIC_PRIMARY_COLOR=#14b8a6
 NEXT_PUBLIC_LOGO_URL=https://tandabuionline.ac.tz/assets/logo.png

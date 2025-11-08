@@ -133,7 +133,7 @@ Student → Open browser → Login → Use immediately
 #### **Method 1: Direct Browser Access** (Primary)
 ```
 1. Open Chrome/Safari on phone
-2. Go to: https://qbridge.tpi.ac.tz
+2. Go to: https://qbridge.tandabuiinstitute.ac.tz
 3. Login with credentials
 4. See mobile-optimized dashboard
 5. Complete evaluations
@@ -143,7 +143,7 @@ Student → Open browser → Login → Use immediately
 
 #### **Method 2: Install as PWA** (Optional)
 ```
-1. Visit https://qbridge.tpi.ac.tz
+1. Visit https://qbridge.tandabuiinstitute.ac.tz
 2. Browser shows "Add to Home Screen"
 3. Tap "Add"
 4. Icon appears on home screen
@@ -225,7 +225,7 @@ Student → Open browser → Login → Use immediately
 
 ### **Production Environment**
 ```
-Domain: https://qbridge.tpi.ac.tz
+Domain: https://qbridge.tandabuiinstitute.ac.tz
 
 Ultahost Remote Server (Self-Hosted):
 - Frontend: Next.js app (Docker container)
@@ -321,7 +321,7 @@ Ultahost Remote Server (Self-Hosted):
 ## 💬 Communication to Stakeholders
 
 ### **To Students**
-"Access Q-Bridge from any smartphone browser - no app download needed! Just visit qbridge.tpi.ac.tz on your phone and complete evaluations easily."
+"Access Q-Bridge from any smartphone browser - no app download needed! Just visit qbridge.tandabuiinstitute.ac.tz on your phone and complete evaluations easily."
 
 ### **To Staff**
 "Q-Bridge works on your desktop, laptop, tablet, or phone. One system, accessible anywhere via your web browser."

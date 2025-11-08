@@ -149,7 +149,7 @@ Auth:          JWT + OAuth2/OIDC
 Server:        Ultahost Remote Server
 Orchestration: Docker Compose
 Reverse Proxy: Nginx with SSL/TLS (Let's Encrypt)
-Domain:        https://qbridge.tpi.ac.tz
+Domain:        https://qbridge.tandabuiinstitute.ac.tz
 ```
 
 ### **Infrastructure**
@@ -235,7 +235,7 @@ Domain:        https://qbridge.tpi.ac.tz
 1. Set up Ultahost remote server
 2. Install Docker and Docker Compose
 3. Configure Nginx with SSL/TLS
-4. Set up domain (qbridge.tpi.ac.tz)
+4. Set up domain (qbridge.tandabuiinstitute.ac.tz)
 
 ### **Week 2: Development Environment**
 1. Initialize Next.js frontend
