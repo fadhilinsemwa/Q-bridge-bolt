@@ -1,0 +1,42 @@
+# backend/Dockerfile.prod
+
+# Stage 1: Dependencies
+FROM node:20-alpine AS deps
+WORKDIR /app
+COPY package.json package-lock.json* ./
+RUN npm ci --only=production || npm install --production
+
+# Stage 2: Builder
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+# Generate Prisma Client
+RUN if [ -f "prisma/schema.prisma" ]; then npx prisma generate; fi
+
+# Build NestJS
+RUN npm run build
+
+# Stage 3: Production
+FROM node:20-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+
+# Install production dependencies
+COPY package.json package-lock.json* ./
+RUN npm ci --only=production || npm install --production
+
+# Copy built app and Prisma
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder /app/prisma ./prisma
+
+# Create non-root user
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nestjs
+
+USER nestjs
+EXPOSE 4000
+
+CMD ["node", "dist/main.js"]

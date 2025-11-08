@@ -1,0 +1,108 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: qbridge-frontend-dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:4000/api
+      - NEXT_PUBLIC_PRIMARY_COLOR=${NEXT_PUBLIC_PRIMARY_COLOR:-#14b8a6}
+      - NEXT_PUBLIC_LOGO_URL=${NEXT_PUBLIC_LOGO_URL}
+      - NEXT_PUBLIC_FAVICON_URL=${NEXT_PUBLIC_FAVICON_URL}
+      - NEXT_PUBLIC_FONT_FAMILY=${NEXT_PUBLIC_FONT_FAMILY:-Inter,sans-serif}
+    depends_on:
+      - backend
+    networks:
+      - qbridge-network
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: qbridge-backend-dev
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - /app/dist
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=${DATABASE_URL:-postgresql://qbridge_dev:dev_password@postgres:5432/qbridge_dev}
+      - REDIS_URL=${REDIS_URL:-redis://redis:6379}
+      - MINIO_ENDPOINT=${MINIO_ENDPOINT:-minio:9000}
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-minioadmin}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-minioadmin123}
+      - JWT_SECRET=${JWT_SECRET:-dev-jwt-secret-change-in-production}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET:-dev-refresh-secret-change-in-production}
+    depends_on:
+      - postgres
+      - redis
+      - minio
+    networks:
+      - qbridge-network
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: qbridge-postgres-dev
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-qbridge_dev}
+      - POSTGRES_USER=${POSTGRES_USER:-qbridge_dev}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-dev_password}
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+    networks:
+      - qbridge-network
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: qbridge-redis-dev
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data_dev:/data
+    networks:
+      - qbridge-network
+    restart: unless-stopped
+
+  minio:
+    image: minio/minio:latest
+    container_name: qbridge-minio-dev
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER:-minioadmin}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD:-minioadmin123}
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data_dev:/data
+    networks:
+      - qbridge-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data_dev:
+    driver: local
+  redis_data_dev:
+    driver: local
+  minio_data_dev:
+    driver: local
+
+networks:
+  qbridge-network:
+    driver: bridge

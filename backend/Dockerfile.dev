@@ -1,0 +1,21 @@
+# backend/Dockerfile.dev
+
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install dependencies
+COPY package.json package-lock.json* ./
+RUN npm ci || npm install
+
+# Copy source code
+COPY . .
+
+# Generate Prisma Client (if prisma schema exists)
+RUN if [ -f "prisma/schema.prisma" ]; then npx prisma generate; fi
+
+# Expose port
+EXPOSE 4000
+
+# Start development server with hot reload
+CMD ["npm", "run", "start:dev"]
