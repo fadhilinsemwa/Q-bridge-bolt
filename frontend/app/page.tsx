@@ -19,7 +19,7 @@ export default function Home() {
             Frontend: http://localhost:3000
           </p>
           <p className="text-xs text-gray-500">
-            Backend: http://localhost:4000
+            Backend: http://localhost:4001
           </p>
         </div>
       </div>
