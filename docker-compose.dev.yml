@@ -40,6 +40,7 @@ services:
       - NODE_ENV=development
       - DATABASE_URL=${DATABASE_URL:-postgresql://qbridge_dev:dev_password@postgres:5432/qbridge_dev}
       - REDIS_URL=${REDIS_URL:-redis://redis:6379}
+      - FRONTEND_URL=http://localhost:3000
       - MINIO_ENDPOINT=${MINIO_ENDPOINT:-minio:9000}
       - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-minioadmin}
       - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-minioadmin123}
@@ -57,7 +58,7 @@ services:
     image: postgres:15-alpine
     container_name: qbridge-postgres-dev
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       - POSTGRES_DB=${POSTGRES_DB:-qbridge_dev}
       - POSTGRES_USER=${POSTGRES_USER:-qbridge_dev}
@@ -72,7 +73,7 @@ services:
     image: redis:7-alpine
     container_name: qbridge-redis-dev
     ports:
-      - "6379:6379"
+      - "6380:6379"
     volumes:
       - redis_data_dev:/data
     networks:
@@ -83,8 +84,8 @@ services:
     image: minio/minio:latest
     container_name: qbridge-minio-dev
     ports:
-      - "9000:9000"
-      - "9001:9001"
+      - "9002:9000"
+      - "9003:9001"
     environment:
       - MINIO_ROOT_USER=${MINIO_ROOT_USER:-minioadmin}
       - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD:-minioadmin123}
@@ -105,4 +106,5 @@ volumes:
 
 networks:
   qbridge-network:
+    name: qbridge-dev-network
     driver: bridge
