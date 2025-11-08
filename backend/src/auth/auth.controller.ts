@@ -7,12 +7,13 @@ import {
   Get,
   Query,
   UseGuards,
-  Request,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { Public } from './decorators/public.decorator';
+import { CurrentUser } from './decorators/current-user.decorator';
 
 /**
  * Auth Controller
@@ -24,8 +25,9 @@ export class AuthController {
 
   /**
    * POST /api/auth/register
-   * Register a new user
+   * Register a new user (Public)
    */
+  @Public()
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
   async register(@Body() registerDto: RegisterDto) {
@@ -34,8 +36,9 @@ export class AuthController {
 
   /**
    * POST /api/auth/login
-   * Login user
+   * Login user (Public)
    */
+  @Public()
   @Post('login')
   @HttpCode(HttpStatus.OK)
   async login(@Body() loginDto: LoginDto) {
@@ -44,8 +47,9 @@ export class AuthController {
 
   /**
    * POST /api/auth/refresh
-   * Refresh access token
+   * Refresh access token (Public)
    */
+  @Public()
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
   async refresh(@Body() refreshTokenDto: RefreshTokenDto) {
@@ -54,20 +58,22 @@ export class AuthController {
 
   /**
    * POST /api/auth/logout
-   * Logout user
-   * Note: Will add JWT guard later
+   * Logout user (Protected)
    */
   @Post('logout')
   @HttpCode(HttpStatus.OK)
-  async logout(@Body() body: { refreshToken?: string }, @Request() req?: any) {
-    const userId = req?.user?.sub; // Will be available after JWT guard is added
-    return this.authService.logout(userId, body.refreshToken);
+  async logout(
+    @CurrentUser() user: any,
+    @Body() body: { refreshToken?: string },
+  ) {
+    return this.authService.logout(user.sub, body.refreshToken);
   }
 
   /**
    * GET /api/auth/verify-email
-   * Verify user email
+   * Verify user email (Public)
    */
+  @Public()
   @Get('verify-email')
   @HttpCode(HttpStatus.OK)
   async verifyEmail(@Query('token') token: string) {
@@ -76,8 +82,9 @@ export class AuthController {
 
   /**
    * POST /api/auth/forgot-password
-   * Request password reset
+   * Request password reset (Public)
    */
+  @Public()
   @Post('forgot-password')
   @HttpCode(HttpStatus.OK)
   async forgotPassword(@Body() body: { email: string }) {
@@ -86,8 +93,9 @@ export class AuthController {
 
   /**
    * POST /api/auth/reset-password
-   * Reset password
+   * Reset password (Public)
    */
+  @Public()
   @Post('reset-password')
   @HttpCode(HttpStatus.OK)
   async resetPassword(
@@ -98,13 +106,11 @@ export class AuthController {
 
   /**
    * GET /api/auth/me
-   * Get current user
-   * Note: Will add JWT guard later
+   * Get current user (Protected)
    */
   @Get('me')
   @HttpCode(HttpStatus.OK)
-  async getCurrentUser(@Request() req: any) {
-    // Will be implemented after JWT guard is added
-    return { user: req.user };
+  async getCurrentUser(@CurrentUser() user: any) {
+    return { user };
   }
 }
