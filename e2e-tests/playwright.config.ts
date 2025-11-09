@@ -11,6 +11,9 @@ dotenv.config({ path: '../.env.development' });
 export default defineConfig({
   testDir: './tests',
   
+  // Global setup - create test users before running tests
+  globalSetup: require.resolve('./tests/setup/create-test-users.setup.ts'),
+  
   // Maximum time one test can run
   timeout: 30 * 1000,
   
